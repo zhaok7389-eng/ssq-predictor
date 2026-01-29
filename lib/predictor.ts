@@ -155,6 +155,7 @@ export async function runPrediction(
     throw new Error('历史数据不足50期，无法进行预测');
   }
 
+  console.log(`预测分析使用了 ${records.length} 期历史数据`);
   onProgress?.('正在分析红球数据...');
 
   // 1. 运行所有红球方法

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import BallNumber from '@/components/BallNumber';
 import { getRecentRecords } from '@/lib/db';
+import { getAvailableRecords } from '@/lib/dataFetcher';
 import { calcFrequency, sortByFrequency, getOddEvenRatio, getBigSmallRatio } from '@/lib/utils';
 import type { LotteryRecord } from '@/lib/types';
 
@@ -12,16 +13,33 @@ type TabType = 'red' | 'blue' | 'trend';
 export default function AnalysisPage() {
   const [activeTab, setActiveTab] = useState<TabType>('red');
   const [records, setRecords] = useState<LotteryRecord[]>([]);
+  const [allRecords, setAllRecords] = useState<LotteryRecord[]>([]);
   const [periodCount, setPeriodCount] = useState(50);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
+  // 首次加载：从服务器获取全量数据
   useEffect(() => {
-    loadData();
-  }, [periodCount]);
+    const loadAll = async () => {
+      try {
+        const data = await getAvailableRecords();
+        setAllRecords(data);
+        setDataLoaded(true);
+      } catch (_e) {
+        // 回退到本地缓存
+        const cached = await getRecentRecords(500);
+        setAllRecords(cached);
+        setDataLoaded(true);
+      }
+    };
+    loadAll();
+  }, []);
 
-  const loadData = async () => {
-    const data = await getRecentRecords(periodCount);
-    setRecords(data);
-  };
+  // 根据期数切片
+  useEffect(() => {
+    if (allRecords.length > 0) {
+      setRecords(allRecords.slice(-periodCount));
+    }
+  }, [periodCount, allRecords]);
 
   const redFreq = calcFrequency(records, 'red');
   const blueFreq = calcFrequency(records, 'blue');

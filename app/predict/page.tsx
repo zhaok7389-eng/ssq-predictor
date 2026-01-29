@@ -6,36 +6,44 @@ import PredictCard from '@/components/PredictCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ShareModal from '@/components/ShareModal';
 import Navigation from '@/components/Navigation';
-import { getRecentRecords, getLatestRecord, savePrediction } from '@/lib/db';
+import { savePrediction } from '@/lib/db';
 import { runPrediction } from '@/lib/predictor';
-import { getNextIssueInfo } from '@/lib/dataFetcher';
+import { getNextIssueInfo, getAvailableRecords } from '@/lib/dataFetcher';
 import { generateId } from '@/lib/utils';
-import type { PredictionResult, LotteryRecord } from '@/lib/types';
+import type { PredictionResult } from '@/lib/types';
 
 export default function PredictPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [loadingMsg, setLoadingMsg] = useState('正在分析数据...');
+  const [loadingMsg, setLoadingMsg] = useState('正在获取历史数据...');
   const [predictions, setPredictions] = useState<PredictionResult[]>([]);
   const [showShare, setShowShare] = useState(false);
   const [targetIssue, setTargetIssue] = useState('');
   const [error, setError] = useState('');
+  const [usedDataCount, setUsedDataCount] = useState(0);
 
   const generatePredictions = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
+      setLoadingMsg('正在获取历史数据...');
 
-      // 获取历史数据
-      const records = await getRecentRecords(500);
+      // 获取可用的历史数据（优先服务器，回退本地缓存）
+      const records = await getAvailableRecords();
+
       if (records.length < 50) {
-        setError('历史数据不足，请返回首页等待数据加载完成');
+        setError('历史数据不足50期，请返回首页等待数据加载完成');
         setLoading(false);
         return;
       }
 
+      setUsedDataCount(records.length);
+      console.log(`预测分析使用了 ${records.length} 期历史数据`);
+
       const nextInfo = getNextIssueInfo();
       setTargetIssue(nextInfo.issue);
+
+      setLoadingMsg(`正在基于 ${records.length} 期数据进行分析...`);
 
       // 运行预测
       const results = await runPrediction(records, (msg) =>
@@ -44,7 +52,6 @@ export default function PredictPage() {
       setPredictions(results);
 
       // 保存预测记录
-      const latest = await getLatestRecord();
       await savePrediction({
         id: generateId(),
         targetIssue: nextInfo.issue,
@@ -77,12 +84,20 @@ export default function PredictPage() {
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="card text-center">
           <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => router.push('/')}
-            className="px-6 py-2 bg-purple-600 text-white rounded-xl text-sm"
-          >
-            返回首页
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => router.push('/')}
+              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-xl text-sm"
+            >
+              返回首页
+            </button>
+            <button
+              onClick={generatePredictions}
+              className="px-6 py-2 bg-purple-600 text-white rounded-xl text-sm"
+            >
+              重试
+            </button>
+          </div>
         </div>
         <Navigation />
       </div>
@@ -97,7 +112,7 @@ export default function PredictPage() {
           onClick={() => router.push('/')}
           className="text-white/80 text-sm flex items-center gap-1"
         >
-          {'\u2190'} 返回
+          ← 返回
         </button>
         <div className="flex gap-2">
           <button
@@ -120,6 +135,9 @@ export default function PredictPage() {
         <h1 className="text-xl font-bold text-white">预测号码</h1>
         <p className="text-white/60 text-sm mt-1">
           第{targetIssue}期 · 共{predictions.length}组
+        </p>
+        <p className="text-white/40 text-xs mt-1">
+          基于 {usedDataCount} 期历史数据分析
         </p>
       </div>
 
