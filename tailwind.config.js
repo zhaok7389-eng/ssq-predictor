@@ -7,12 +7,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'ssq-red': '#e63946',
-        'ssq-blue': '#457b9d',
-        'ssq-gold': '#f4a261',
-        'ssq-bg': '#f8f9fa',
+        'ssq-red': '#FF4757',
+        'ssq-blue': '#3498db',
+        'ssq-gold': '#FFD700',
+        'ssq-pink': '#FFB6C1',
+        'ssq-pink-deep': '#FF69B4',
+        'ssq-bg': '#FFF9F0',
         'ssq-card': '#ffffff',
-        'ssq-text': '#1d3557',
+        'ssq-text': '#4A3728',
+        'ssq-sub': '#8B7B6B',
       },
     },
   },

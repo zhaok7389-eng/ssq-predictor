@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '双色球智能预测',
-  description: '基于多种统计分析方法的双色球智能预测系统',
+  title: '\u8F6F\u808B\u306E\u53D1\u8D22\u7814\u7A76\u6240',
+  description: '\u9ED1\u5A03\u7684\u9ED1\u79D1\u6280\uFF0C\u4E13\u6CBB\u5C0F\u8D22\u8FF7',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: '双色球预测',
+    title: '\u53D1\u8D22\u7814\u7A76\u6240',
   },
 };
 
@@ -17,7 +17,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#667eea',
+  themeColor: '#FFB6C1',
 };
 
 export default function RootLayout({

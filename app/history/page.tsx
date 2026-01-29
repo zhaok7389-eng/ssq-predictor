@@ -31,57 +31,57 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="min-h-screen pb-20 p-4">
+    <div className="min-h-screen pb-24 p-4">
       <header className="text-center py-6">
-        <h1 className="text-xl font-bold text-white">{'\u{1F4CB}'} 历史预测</h1>
-        <p className="text-white/60 text-sm mt-1">
-          共 {records.length} 条记录
+        <div className="text-4xl mb-2">{'\u{1F4B0}'}</div>
+        <h1 className="text-xl font-bold text-gradient-gold">{'\u5C0F\u91D1\u5E93'}</h1>
+        <p className="text-ssq-sub text-sm mt-1">
+          \u5171 {records.length} \u6B21\u62BD\u7B7E\u8BB0\u5F55
         </p>
       </header>
 
       {records.length === 0 ? (
         <div className="card text-center py-12">
-          <p className="text-gray-400 text-sm mb-4">暂无预测记录</p>
+          <div className="text-5xl mb-4">{'\u{1F437}'}</div>
+          <p className="text-ssq-sub text-sm mb-4">\u8FD8\u6CA1\u6709\u62BD\u8FC7\u7B7E\u54E6~</p>
           <button
             onClick={() => router.push('/predict')}
-            className="px-6 py-2 bg-purple-600 text-white rounded-xl text-sm"
+            className="btn-main px-6 py-2 text-white rounded-xl text-sm"
           >
-            去预测
+            {'\u{1F3B0}'} \u53BB\u62BD\u7B7E
           </button>
         </div>
       ) : (
         <div className="space-y-3">
           {records.map((record) => (
             <div key={record.id} className="card">
-              {/* 标题行 */}
               <div
                 className="flex items-center justify-between cursor-pointer"
                 onClick={() => toggleExpand(record.id)}
               >
                 <div>
                   <p className="font-semibold text-ssq-text text-sm">
-                    第{record.targetIssue}期预测
+                    {'\u{1F4C4}'} \u7B2C{record.targetIssue}\u671F\u62BD\u7B7E
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-ssq-sub mt-0.5">
                     {new Date(record.createdAt).toLocaleString('zh-CN')}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-400">
-                    {record.predictions.length}组
+                  <span className="text-xs px-2 py-0.5 bg-pink-50 text-pink-500 rounded-full">
+                    {record.predictions.length}\u7EC4
                   </span>
-                  <span className="text-gray-300">
+                  <span className="text-pink-300">
                     {expandedId === record.id ? '\u25B2' : '\u25BC'}
                   </span>
                 </div>
               </div>
 
-              {/* 展开详情 */}
               {expandedId === record.id && (
-                <div className="mt-4 space-y-3 border-t pt-3">
+                <div className="mt-4 space-y-3 border-t border-pink-50 pt-3">
                   {record.predictions.map((pred, i) => (
                     <div key={i} className="flex items-center gap-1 flex-wrap">
-                      <span className="text-xs text-gray-400 w-6">
+                      <span className="text-xs text-ssq-sub w-6">
                         {i + 1}.
                       </span>
                       {pred.red.map((n, j) => (
@@ -89,7 +89,7 @@ export default function HistoryPage() {
                       ))}
                       <span className="mx-0.5 text-gray-200">|</span>
                       <BallNumber number={pred.blue} type="blue" size="sm" />
-                      <span className="text-xs text-gray-400 ml-1">
+                      <span className="text-xs text-ssq-sub ml-1">
                         {pred.confidence}%
                       </span>
                     </div>
@@ -101,7 +101,7 @@ export default function HistoryPage() {
                     }}
                     className="text-xs text-red-400 mt-2 hover:text-red-500"
                   >
-                    删除此记录
+                    {'\u{1F5D1}'} \u5220\u9664\u8BB0\u5F55
                   </button>
                 </div>
               )}
@@ -109,6 +109,13 @@ export default function HistoryPage() {
           ))}
         </div>
       )}
+
+      {/* Footer */}
+      <div className="text-center py-4 mt-4">
+        <p className="text-xs text-pink-300">
+          Made with {'\u{1F49D}'} by \u9ED1\u5A03
+        </p>
+      </div>
 
       <Navigation />
     </div>
