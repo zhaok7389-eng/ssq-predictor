@@ -33,22 +33,22 @@ export default function HistoryPage() {
   return (
     <div className="min-h-screen pb-24 p-4">
       <header className="text-center py-6">
-        <div className="text-4xl mb-2">{'\u{1F4B0}'}</div>
-        <h1 className="text-xl font-bold text-gradient-gold">{'\u5C0F\u91D1\u5E93'}</h1>
+        <div className="text-4xl mb-2">💰</div>
+        <h1 className="text-xl font-bold text-gradient-gold">小金库</h1>
         <p className="text-ssq-sub text-sm mt-1">
-          \u5171 {records.length} \u6B21\u62BD\u7B7E\u8BB0\u5F55
+          共 {records.length} 次抽签记录
         </p>
       </header>
 
       {records.length === 0 ? (
         <div className="card text-center py-12">
-          <div className="text-5xl mb-4">{'\u{1F437}'}</div>
-          <p className="text-ssq-sub text-sm mb-4">\u8FD8\u6CA1\u6709\u62BD\u8FC7\u7B7E\u54E6~</p>
+          <div className="text-5xl mb-4">🐷</div>
+          <p className="text-ssq-sub text-sm mb-4">还没有抽过签哦~</p>
           <button
             onClick={() => router.push('/predict')}
             className="btn-main px-6 py-2 text-white rounded-xl text-sm"
           >
-            {'\u{1F3B0}'} \u53BB\u62BD\u7B7E
+            🎰 去抽签
           </button>
         </div>
       ) : (
@@ -61,7 +61,7 @@ export default function HistoryPage() {
               >
                 <div>
                   <p className="font-semibold text-ssq-text text-sm">
-                    {'\u{1F4C4}'} \u7B2C{record.targetIssue}\u671F\u62BD\u7B7E
+                    📄 第{record.targetIssue}期抽签
                   </p>
                   <p className="text-xs text-ssq-sub mt-0.5">
                     {new Date(record.createdAt).toLocaleString('zh-CN')}
@@ -69,10 +69,10 @@ export default function HistoryPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs px-2 py-0.5 bg-pink-50 text-pink-500 rounded-full">
-                    {record.predictions.length}\u7EC4
+                    {record.predictions.length}组
                   </span>
                   <span className="text-pink-300">
-                    {expandedId === record.id ? '\u25B2' : '\u25BC'}
+                    {expandedId === record.id ? '▲' : '▼'}
                   </span>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export default function HistoryPage() {
                     }}
                     className="text-xs text-red-400 mt-2 hover:text-red-500"
                   >
-                    {'\u{1F5D1}'} \u5220\u9664\u8BB0\u5F55
+                    🗑 删除记录
                   </button>
                 </div>
               )}
@@ -113,7 +113,7 @@ export default function HistoryPage() {
       {/* Footer */}
       <div className="text-center py-4 mt-4">
         <p className="text-xs text-pink-300">
-          Made with {'\u{1F49D}'} by \u9ED1\u5A03
+          Made with 💝 by 黑娃
         </p>
       </div>
 

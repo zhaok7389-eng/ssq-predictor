@@ -21,7 +21,8 @@ export default function BallNumber({ number, type, size = 'md' }: BallNumberProp
   return (
     <span
       className={`
-        inline-flex items-center justify-center rounded-full font-bold text-white shadow-md
+        inline-flex items-center justify-center rounded-full font-bold text-white shadow-lg
+        transform hover:scale-110 transition-transform
         ${sizeClasses[size]}
         ${colorClasses[type]}
       `}

@@ -60,18 +60,18 @@ export default function AnalysisPage() {
   }
 
   const tabs: { key: TabType; label: string; icon: string }[] = [
-    { key: 'red', label: '\u7EA2\u7403\u7BC7', icon: '\u{1F534}' },
-    { key: 'blue', label: '\u84DD\u7403\u7BC7', icon: '\u{1F535}' },
-    { key: 'trend', label: '\u8D70\u52BF\u7BC7', icon: '\u{1F4C8}' },
+    { key: 'red', label: '红球篇', icon: '🔴' },
+    { key: 'blue', label: '蓝球篇', icon: '🔵' },
+    { key: 'trend', label: '走势篇', icon: '📈' },
   ];
 
   return (
     <div className="min-h-screen pb-24 p-4">
       <header className="text-center py-6">
-        <div className="text-4xl mb-2">{'\u{1F4D6}'}</div>
-        <h1 className="text-xl font-bold text-gradient-pink">{'\u5996\u7CBE\u79D8\u7C4D'}</h1>
+        <div className="text-4xl mb-2">📖</div>
+        <h1 className="text-xl font-bold text-gradient-pink">妖精秘籍</h1>
         <p className="text-ssq-sub text-sm mt-1">
-          \u57FA\u4E8E\u6700\u8FD1 {records.length} \u671F\u6570\u636E
+          基于最近 {records.length} 期数据
         </p>
       </header>
 
@@ -87,7 +87,7 @@ export default function AnalysisPage() {
                 : 'bg-white text-ssq-sub border border-pink-100'
             }`}
           >
-            {n}\u671F
+            {n}期
           </button>
         ))}
       </div>
@@ -113,7 +113,7 @@ export default function AnalysisPage() {
       {activeTab === 'red' && (
         <div className="card">
           <h3 className="text-sm font-semibold text-ssq-text mb-4">
-            {'\u{1F534}'} \u7EA2\u7403\u51FA\u73B0\u9891\u7387\u6392\u884C\uFF081-33\uFF09
+            🔴 红球出现频率排行（1-33）
           </h3>
           <div className="space-y-2">
             {sortedRed.map((num, i) => (
@@ -130,13 +130,13 @@ export default function AnalysisPage() {
                   </div>
                 </div>
                 <span className="text-xs text-ssq-sub w-12 text-right">
-                  {redFreq[num] || 0}\u6B21
+                  {redFreq[num] || 0}次
                 </span>
                 {i < 3 && (
-                  <span className="text-xs text-red-500 font-medium bg-red-50 px-1.5 py-0.5 rounded">{'\u{1F525}'}\u70ED</span>
+                  <span className="text-xs text-red-500 font-medium bg-red-50 px-1.5 py-0.5 rounded">🔥热</span>
                 )}
                 {i >= sortedRed.length - 3 && (
-                  <span className="text-xs text-blue-500 font-medium bg-blue-50 px-1.5 py-0.5 rounded">{'\u{2744}'}\u51B7</span>
+                  <span className="text-xs text-blue-500 font-medium bg-blue-50 px-1.5 py-0.5 rounded">❄冷</span>
                 )}
               </div>
             ))}
@@ -148,7 +148,7 @@ export default function AnalysisPage() {
       {activeTab === 'blue' && (
         <div className="card">
           <h3 className="text-sm font-semibold text-ssq-text mb-4">
-            {'\u{1F535}'} \u84DD\u7403\u51FA\u73B0\u9891\u7387\u6392\u884C\uFF081-16\uFF09
+            🔵 蓝球出现频率排行（1-16）
           </h3>
           <div className="space-y-2">
             {sortedBlue.map((num, i) => (
@@ -165,13 +165,13 @@ export default function AnalysisPage() {
                   </div>
                 </div>
                 <span className="text-xs text-ssq-sub w-12 text-right">
-                  {blueFreq[num] || 0}\u6B21
+                  {blueFreq[num] || 0}次
                 </span>
                 {i < 3 && (
-                  <span className="text-xs text-red-500 font-medium bg-red-50 px-1.5 py-0.5 rounded">{'\u{1F525}'}\u70ED</span>
+                  <span className="text-xs text-red-500 font-medium bg-red-50 px-1.5 py-0.5 rounded">🔥热</span>
                 )}
                 {i >= sortedBlue.length - 3 && (
-                  <span className="text-xs text-blue-500 font-medium bg-blue-50 px-1.5 py-0.5 rounded">{'\u{2744}'}\u51B7</span>
+                  <span className="text-xs text-blue-500 font-medium bg-blue-50 px-1.5 py-0.5 rounded">❄冷</span>
                 )}
               </div>
             ))}
@@ -185,13 +185,13 @@ export default function AnalysisPage() {
           {/* Odd/Even */}
           <div className="card">
             <h3 className="text-sm font-semibold text-ssq-text mb-3">
-              {'\u{1F3B2}'} \u7EA2\u7403\u5947\u5076\u7EDF\u8BA1
+              🎲 红球奇偶统计
             </h3>
             <div className="flex items-center gap-3">
               <div className="flex-1">
                 <div className="flex justify-between text-xs text-ssq-sub mb-1">
-                  <span>\u5947\u6570 {totalOdd}</span>
-                  <span>\u5076\u6570 {totalEven}</span>
+                  <span>奇数 {totalOdd}</span>
+                  <span>偶数 {totalEven}</span>
                 </div>
                 <div className="h-6 bg-gray-50 rounded-full overflow-hidden flex">
                   <div
@@ -222,13 +222,13 @@ export default function AnalysisPage() {
           {/* Big/Small */}
           <div className="card">
             <h3 className="text-sm font-semibold text-ssq-text mb-3">
-              {'\u{1F4CF}'} \u7EA2\u7403\u5927\u5C0F\u7EDF\u8BA1\uFF081-16\u5C0F / 17-33\u5927\uFF09
+              📏 红球大小统计（1-16小 / 17-33大）
             </h3>
             <div className="flex items-center gap-3">
               <div className="flex-1">
                 <div className="flex justify-between text-xs text-ssq-sub mb-1">
-                  <span>\u5C0F\u53F7 {totalSmall}</span>
-                  <span>\u5927\u53F7 {totalBig}</span>
+                  <span>小号 {totalSmall}</span>
+                  <span>大号 {totalBig}</span>
                 </div>
                 <div className="h-6 bg-gray-50 rounded-full overflow-hidden flex">
                   <div
@@ -259,13 +259,13 @@ export default function AnalysisPage() {
           {/* Recent 10 draws */}
           <div className="card">
             <h3 className="text-sm font-semibold text-ssq-text mb-3">
-              {'\u{1F3B1}'} \u6700\u8FD110\u671F\u5F00\u5956\u53F7\u7801
+              🎱 最近10期开奖号码
             </h3>
             <div className="space-y-2">
               {records.slice(-10).reverse().map((r) => (
                 <div key={r.issue} className="flex items-center gap-1">
                   <span className="text-xs text-ssq-sub w-16 shrink-0">
-                    {r.issue.slice(-3)}\u671F
+                    {r.issue.slice(-3)}期
                   </span>
                   <div className="flex gap-0.5 flex-wrap">
                     {r.red.map((n, j) => (
@@ -284,7 +284,7 @@ export default function AnalysisPage() {
       {/* Footer */}
       <div className="text-center py-4 mt-4">
         <p className="text-xs text-pink-300">
-          Made with {'\u{1F49D}'} by \u9ED1\u5A03
+          Made with 💝 by 黑娃
         </p>
       </div>
 

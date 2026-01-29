@@ -10,18 +10,18 @@ interface PredictCardProps {
 
 // Pig comments based on confidence
 function getPigComment(confidence: number): string {
-  if (confidence >= 90) return '\u{1F437}\u{1F4AF} \u672C\u732A\u62CD\u80F8\u810A\u4FDD\u8BC1\uFF01';
-  if (confidence >= 80) return '\u{1F437}\u2728 \u8FD9\u7EC4\u672C\u732A\u5F88\u770B\u597D\u54E6\uFF01';
-  if (confidence >= 70) return '\u{1F437}\u{1F44D} \u611F\u89C9\u8FD8\u884C\uFF0C\u53EF\u4EE5\u4E00\u8BD5~';
-  if (confidence >= 60) return '\u{1F437}\u{1F914} \u8981\u4E0D\u8BD5\u8BD5\uFF1F';
-  return '\u{1F437}\u{1F331} \u6765\u8BD5\u8BD5\u8FD0\u6C14\u5427~';
+  if (confidence >= 90) return '🐷💯 本猪拍胸脊保证！';
+  if (confidence >= 80) return '🐷✨ 这组本猪很看好哦！';
+  if (confidence >= 70) return '🐷👍 感觉还行，可以一试~';
+  if (confidence >= 60) return '🐷🤔 要不试试？';
+  return '🐷🌱 来试试运气吧~';
 }
 
 // Rank badge
 function getRankBadge(idx: number): string {
-  if (idx === 0) return '\u{1F451}';
-  if (idx === 1) return '\u{1F948}';
-  if (idx === 2) return '\u{1F949}';
+  if (idx === 0) return '👑';
+  if (idx === 1) return '🥈';
+  if (idx === 2) return '🥉';
   return `${idx + 1}`;
 }
 
@@ -43,7 +43,7 @@ export default function PredictCard({ prediction, index }: PredictCardProps) {
         <div className="flex items-center gap-2">
           <span className="text-lg">{getRankBadge(index)}</span>
           <span className="font-semibold text-ssq-text">
-            {index === 0 ? '\u{1F437} \u672C\u732A\u9996\u63A8' : `\u7B2C${index + 1}\u7EC4`}
+            {index === 0 ? '🐷 本猪首推' : `第${index + 1}组`}
           </span>
         </div>
         <span

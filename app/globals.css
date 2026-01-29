@@ -22,7 +22,7 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-  background: linear-gradient(160deg, #FFF0F3 0%, #FFFDF0 50%, #FFF5F5 100%);
+  background: linear-gradient(135deg, #fff5f5 0%, #fef3c7 50%, #fff5f5 100%);
   min-height: 100vh;
   color: var(--text-main);
 }
@@ -31,23 +31,12 @@ body {
 .card {
   @apply bg-white rounded-2xl p-4;
   box-shadow: 0 2px 16px rgba(255, 182, 193, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ===== Ball Styles ===== */
-.ball-red {
-  background: linear-gradient(135deg, #FF6B6B, #FF4757);
-  box-shadow: 0 2px 8px rgba(255, 71, 87, 0.35);
-}
-
-.ball-blue {
-  background: linear-gradient(135deg, #74b9ff, #3498db);
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.35);
-}
-
-.ball-lg {
-  width: 44px;
-  height: 44px;
-  font-size: 16px;
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.35);
 }
 
 /* ===== Main Button ===== */
@@ -62,24 +51,6 @@ body {
   transform: scale(0.96);
 }
 
-.btn-main::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-}
-
-.btn-main:active::after {
-  width: 200%;
-  height: 200%;
-}
-
 /* ===== Pig Float Animation ===== */
 @keyframes pigFloat {
   0%, 100% { transform: translateY(0px) rotate(-2deg); }
@@ -90,59 +61,76 @@ body {
   animation: pigFloat 3s ease-in-out infinite;
 }
 
-/* ===== Coin Shine ===== */
-@keyframes coinShine {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.3); }
-}
-
-.coin-shine {
-  animation: coinShine 2s ease-in-out infinite;
-}
-
-/* ===== Pulse Glow ===== */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(255, 182, 193, 0.4); }
-  50% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.6); }
-}
-
-.pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-/* ===== Slot Machine ===== */
+/* ===== Slot Machine Spin ===== */
 @keyframes slotSpin {
   0% { transform: translateY(0); }
   100% { transform: translateY(-100%); }
 }
 
-.slot-reel {
-  overflow: hidden;
-  height: 48px;
-}
-
-.slot-reel-inner {
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.animate-slot-spin {
+  animation: slotSpin 0.1s linear infinite;
 }
 
 /* ===== Coin Fall ===== */
 @keyframes coinFall {
   0% {
+    transform: translateY(-100vh) rotate(0deg);
     opacity: 1;
-    transform: translateY(-20px) rotate(0deg);
   }
   100% {
-    opacity: 0;
     transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
   }
 }
 
-.coin-particle {
-  position: fixed;
-  pointer-events: none;
-  z-index: 100;
-  animation: coinFall 2.5s ease-in forwards;
-  font-size: 24px;
+.coin-fall {
+  animation: coinFall 2s ease-in forwards;
+}
+
+/* ===== Card Pop ===== */
+@keyframes cardPop {
+  0% {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-card-pop {
+  animation: cardPop 0.4s ease-out forwards;
+}
+
+/* ===== Float ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ===== Sparkle ===== */
+@keyframes sparkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* ===== Glow ===== */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 100, 100, 0.5); }
+  50% { box-shadow: 0 0 40px rgba(255, 100, 100, 0.8); }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
 }
 
 /* ===== Fade In Up ===== */
@@ -161,6 +149,39 @@ body {
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
+/* ===== Pulse Glow ===== */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 182, 193, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.6); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ===== Bounce Ball Loading ===== */
+@keyframes bounce-ball {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.loading-ball {
+  animation: bounce-ball 0.6s ease-in-out infinite;
+}
+
+.loading-ball:nth-child(2) { animation-delay: 0.1s; }
+.loading-ball:nth-child(3) { animation-delay: 0.2s; }
+
+/* ===== Toast ===== */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.toast-in {
+  animation: toastIn 0.3s ease-out forwards;
+}
+
 /* ===== Bubble Pop ===== */
 @keyframes bubblePop {
   0% { transform: scale(0.8); opacity: 0; }
@@ -170,35 +191,6 @@ body {
 
 .bubble-pop {
   animation: bubblePop 0.4s ease-out forwards;
-}
-
-/* ===== Bubble Fade ===== */
-@keyframes bubbleFade {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.bubble-fade {
-  animation: bubbleFade 0.5s ease-out forwards;
-}
-
-/* ===== Toast ===== */
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes toastOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(20px); }
-}
-
-.toast-in {
-  animation: toastIn 0.3s ease-out forwards;
-}
-
-.toast-out {
-  animation: toastOut 0.3s ease-in forwards;
 }
 
 /* ===== Text Gradients ===== */
@@ -214,34 +206,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* ===== Loading Animation ===== */
-@keyframes bounce-ball {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-.loading-ball {
-  animation: bounce-ball 0.6s ease-in-out infinite;
-}
-
-.loading-ball:nth-child(2) { animation-delay: 0.1s; }
-.loading-ball:nth-child(3) { animation-delay: 0.2s; }
-.loading-ball:nth-child(4) { animation-delay: 0.3s; }
-.loading-ball:nth-child(5) { animation-delay: 0.4s; }
-.loading-ball:nth-child(6) { animation-delay: 0.5s; }
-
-/* ===== Shimmer ===== */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s ease-in-out infinite;
 }
 
 /* ===== Safe bottom ===== */
@@ -263,23 +227,13 @@ body {
   border-radius: 2px;
 }
 
-/* ===== Sparkle ===== */
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 1; transform: scale(1); }
+/* ===== Floating decorations ===== */
+@keyframes floatDecor {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-20px) rotate(10deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
 }
 
-.sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
-}
-
-/* ===== Wiggle ===== */
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
-}
-
-.wiggle {
-  animation: wiggle 0.5s ease-in-out;
+.float-decor {
+  animation: floatDecor 4s ease-in-out infinite;
 }

@@ -4,11 +4,10 @@ interface LoadingSpinnerProps {
   message?: string;
 }
 
-export default function LoadingSpinner({ message = '\u52A0\u8F7D\u4E2D...' }: LoadingSpinnerProps) {
+export default function LoadingSpinner({ message = '加载中...' }: LoadingSpinnerProps) {
   return (
     <div className="flex flex-col items-center justify-center py-12">
-      {/* Pig loading animation */}
-      <div className="text-6xl pig-float mb-4">{'\u{1F437}'}</div>
+      <div className="text-6xl animate-bounce mb-4">🐷</div>
       <div className="flex gap-2 mb-4">
         {[1, 2, 3].map((i) => (
           <div
@@ -18,7 +17,7 @@ export default function LoadingSpinner({ message = '\u52A0\u8F7D\u4E2D...' }: Lo
           />
         ))}
       </div>
-      <p className="text-ssq-sub text-sm animate-pulse">{message}</p>
+      <p className="text-gray-500 text-sm animate-pulse">{message}</p>
     </div>
   );
 }
